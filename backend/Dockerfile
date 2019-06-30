@@ -1,0 +1,16 @@
+FROM node:10.16.0
+RUN npm install -g --unsafe-perm prisma2
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY package*.json tsconfig.json ./
+COPY prisma ./prisma/
+
+RUN npm install
+RUN prisma2 lift save -n migrate
+RUN prisma2 lift up 
+RUN prisma2 generate
+
+
+CMD [ "npm", "start" ]

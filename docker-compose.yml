@@ -5,30 +5,28 @@ services:
     ports:
       - '5555:5555'
     build:
-      context: backend
-      dockerfile: Dockerfile.prisma
-    command: 'prisma2 dev'
+      context: backend/prisma
+      dockerfile: Dockerfile
     volumes:
-      - ./backend/src:/app/src
-      - node_modules:/app/node_modules
-      - prisma:/app/prisma
-      - generated:/app/generated
+      - /app/node_modules
+      - /app/prisma
+      - /app/generated
   backend:
     container_name: backend
-    depends_on:
-      - prisma
     ports:
       - '4000:4000'
     build:
       context: backend
-      dockerfile: Dockerfile.backend
-    command: 'npm start'
+      dockerfile: Dockerfile
     volumes:
       - ./backend/src:/app/src
-      - node_modules:/app/node_modules
-      - prisma:/app/prisma
-      - generated:/app/generated
-volumes:
-  node_modules:
-  prisma:
-  generated:
+      - /app/node_modules
+      - /app/prisma
+      - /app/generated
+  frontend:
+    container_name: frontend
+    ports:
+      - '3000:3000'
+    build:
+      context: frontend
+      dockerfile: Dockerfile
