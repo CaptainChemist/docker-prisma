@@ -1,0 +1,15 @@
+{
+  "name": "docker-prisma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker-compose up --build",
+    "stop": "docker-compose down",
+    "clean": "docker system prune -aq",
+    "seed": "docker exec -it prisma npm run seed",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
