@@ -30,3 +30,10 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile
+    volumes:
+      - ./frontend/components:/app/components
+      - ./frontend/interfaces:/app/interfaces
+      - ./frontend/pages:/app/pages
+      - ./frontend/utils:/app/utils
+      - /app/node_modules
+      - /app/.next

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "docker-compose up --build",
     "stop": "docker-compose down",
-    "clean": "docker system prune -aq",
+    "clean": "docker system prune -af",
     "seed": "docker exec -it prisma npm run seed",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

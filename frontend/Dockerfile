@@ -2,11 +2,7 @@ FROM node:10.16.0
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json next-env.d.ts tsconfig.json ./
 RUN npm install
 
-COPY . .
-
-RUN npm run build
-
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "dev" ]
