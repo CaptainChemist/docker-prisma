@@ -35,5 +35,6 @@ services:
       - ./frontend/interfaces:/app/interfaces
       - ./frontend/pages:/app/pages
       - ./frontend/utils:/app/utils
+      - ./frontend/graphql:/app/graphql
       - /app/node_modules
       - /app/.next
