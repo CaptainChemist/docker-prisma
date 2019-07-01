@@ -1,0 +1,9 @@
+overwrite: true
+schema: "http://backend:4000/"
+documents: graphql/**/*.gql
+generates:
+  generated/apolloComponents.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"

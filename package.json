@@ -8,8 +8,12 @@
     "stop": "docker-compose down",
     "clean": "docker system prune -af",
     "seed": "docker exec -it prisma npm run seed",
+    "generate": "docker exec -it frontend npm run generate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "graphql-tag": "^2.10.1"
+  }
 }

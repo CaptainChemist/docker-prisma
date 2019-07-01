@@ -1,9 +1,9 @@
-version: '3.7'
+version: "3.7"
 services:
   prisma:
     container_name: prisma
     ports:
-      - '5555:5555'
+      - "5555:5555"
     build:
       context: backend/prisma
       dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
   backend:
     container_name: backend
     ports:
-      - '4000:4000'
+      - "4000:4000"
     build:
       context: backend
       dockerfile: Dockerfile
@@ -26,15 +26,11 @@ services:
   frontend:
     container_name: frontend
     ports:
-      - '3000:3000'
+      - "3000:3000"
     build:
       context: frontend
       dockerfile: Dockerfile
     volumes:
-      - ./frontend/components:/app/components
-      - ./frontend/interfaces:/app/interfaces
-      - ./frontend/pages:/app/pages
-      - ./frontend/utils:/app/utils
-      - ./frontend/graphql:/app/graphql
+      - ./frontend:/app
       - /app/node_modules
       - /app/.next
