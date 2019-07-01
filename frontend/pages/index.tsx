@@ -22,20 +22,20 @@ const IndexPage: NextPage = () => {
           if (error) {
             return <p>Error</p>;
           }
-          console.log(data);
 
-          // const { feed } = data;
-          // console.log(feed);
-          return <p>hi</p>;
-          // return (
-          //   <div>
-          //     {feed.map(post => (
-          //       <p>
-          //         {post.title}-{post.message}
-          //       </p>
-          //     ))}
-          //   </div>
-          // );
+          if (data && "feed" in data && data.feed.length > 0) {
+            return (
+              <div>
+                {data.feed.map(({ title, content }, i) => (
+                  <p key={i}>
+                    {title}-{content}
+                  </p>
+                ))}
+              </div>
+            );
+          }
+
+          return <p>No results yet.</p>;
         }}
       </FeedQueryComponent>
     </Layout>
