@@ -4,7 +4,7 @@ RUN npm install -g --unsafe-perm prisma2
 RUN mkdir /app
 WORKDIR /app
 
-COPY package*.json tsconfig.json ./
+COPY package*.json ./
 COPY prisma ./prisma/
 
 RUN npm install
