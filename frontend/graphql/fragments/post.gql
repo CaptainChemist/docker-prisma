@@ -1,6 +1,9 @@
-fragment Post on Post {
+#import from '../user.gql'
+
+fragment PostFragment on Post {
   id
   published
   title
   content
+  published
 }

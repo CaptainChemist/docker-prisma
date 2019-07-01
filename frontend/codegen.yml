@@ -3,6 +3,9 @@ schema: "http://backend:4000/"
 documents: graphql/**/*.gql
 generates:
   generated/apolloComponents.tsx:
+    config:
+      withHOC: false
+      withComponent: true
     plugins:
       - "typescript"
       - "typescript-operations"

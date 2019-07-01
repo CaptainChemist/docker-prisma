@@ -1,8 +1,8 @@
+#import from '../fragments/post.gql'
+#import from '../fragments/post.gql'
+
 query feedQuery {
   feed {
-    id
-    published
-    title
-    content
+    ...PostFragment
   }
 }
