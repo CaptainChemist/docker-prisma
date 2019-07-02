@@ -41,6 +41,7 @@ type Query {
   feed(published: Boolean): [Post!]!
   filterPosts(searchString: String): [Post!]!
   post(where: PostWhereUniqueInput!): Post
+  users: [User!]!
 }
 
 type User {

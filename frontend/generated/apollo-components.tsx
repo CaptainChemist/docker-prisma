@@ -69,6 +69,7 @@ export type PostWhereUniqueInput = {
 export type Query = {
   __typename?: "Query";
   post?: Maybe<Post>;
+  users: Array<User>;
   feed: Array<Post>;
   filterPosts: Array<Post>;
 };
@@ -166,6 +167,12 @@ export type PostQueryQueryVariables = {
 
 export type PostQueryQuery = { __typename?: "Query" } & {
   post: Maybe<{ __typename?: "Post" } & PostFragmentFragment>;
+};
+
+export type UsersQueryQueryVariables = {};
+
+export type UsersQueryQuery = { __typename?: "Query" } & {
+  users: Array<{ __typename?: "User" } & UserFragmentFragment>;
 };
 export const PostFragmentFragmentDoc = gql`
   fragment PostFragment on Post {
@@ -348,6 +355,26 @@ export type PostQueryComponentProps = Omit<
 export const PostQueryComponent = (props: PostQueryComponentProps) => (
   <ReactApollo.Query<PostQueryQuery, PostQueryQueryVariables>
     query={PostQueryDocument}
+    {...props}
+  />
+);
+
+export const UsersQueryDocument = gql`
+  query usersQuery {
+    users {
+      ...UserFragment
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+export type UsersQueryComponentProps = Omit<
+  ReactApollo.QueryProps<UsersQueryQuery, UsersQueryQueryVariables>,
+  "query"
+>;
+
+export const UsersQueryComponent = (props: UsersQueryComponentProps) => (
+  <ReactApollo.Query<UsersQueryQuery, UsersQueryQueryVariables>
+    query={UsersQueryDocument}
     {...props}
   />
 );

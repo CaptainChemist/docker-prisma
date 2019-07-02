@@ -42,6 +42,13 @@ const Query = objectType({
       alias: 'post'
     });
 
+    t.list.field('users', {
+      type: 'User',
+      resolve: (parent, args, ctx) => {
+        return ctx.photon.users.findMany();
+      }
+    });
+
     t.list.field('feed', {
       type: 'Post',
       args: {
