@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreateDraftMutationComponent } from '../generated/apollo-components';
+import { CreateDraftMutationComponent, FeedQueryDocument } from '../generated/apollo-components';
 
 type Props = {};
 const initialState = { title: '', content: '', authorEmail: '' };
@@ -20,7 +20,13 @@ class NewDraft extends React.Component<Props> {
           <form
             onSubmit={e => {
               e.preventDefault();
-              createDraft({ variables: { ...this.state } }).then(() => {
+              createDraft({
+                variables: { ...this.state },
+                refetchQueries: [
+                  { query: FeedQueryDocument, variables: { published: true } },
+                  { query: FeedQueryDocument, variables: { published: false } }
+                ]
+              }).then(() => {
                 this.setState({ title: '', content: '', authorEmail: '' });
               });
             }}

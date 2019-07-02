@@ -45,6 +45,8 @@ export type Post = {
   id: Scalars["ID"];
   title: Scalars["String"];
   content?: Maybe<Scalars["String"]>;
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
   published: Scalars["Boolean"];
 };
 
@@ -73,6 +75,10 @@ export type Query = {
 
 export type QueryPostArgs = {
   where: PostWhereUniqueInput;
+};
+
+export type QueryFeedArgs = {
+  published?: Maybe<Scalars["Boolean"]>;
 };
 
 export type QueryFilterPostsArgs = {
@@ -121,6 +127,14 @@ export type CreateDraftMutationMutation = { __typename?: "Mutation" } & {
   createDraft: { __typename?: "Post" } & PostFragmentFragment;
 };
 
+export type DeleteOnePostMutationVariables = {
+  id: Scalars["ID"];
+};
+
+export type DeleteOnePostMutation = { __typename?: "Mutation" } & {
+  deleteOnePost: Maybe<{ __typename?: "Post" } & PostFragmentFragment>;
+};
+
 export type PublishMutationMutationVariables = {
   id: Scalars["ID"];
 };
@@ -138,7 +152,9 @@ export type SignupUserMutationMutation = { __typename?: "Mutation" } & {
   signupUser: { __typename?: "User" } & UserFragmentFragment;
 };
 
-export type FeedQueryQueryVariables = {};
+export type FeedQueryQueryVariables = {
+  published: Scalars["Boolean"];
+};
 
 export type FeedQueryQuery = { __typename?: "Query" } & {
   feed: Array<{ __typename?: "Post" } & PostFragmentFragment>;
@@ -199,6 +215,33 @@ export const CreateDraftMutationComponent = (
     CreateDraftMutationMutationVariables
   >
     mutation={CreateDraftMutationDocument}
+    {...props}
+  />
+);
+
+export const DeleteOnePostDocument = gql`
+  mutation deleteOnePost($id: ID!) {
+    deleteOnePost(where: { id: $id }) {
+      ...PostFragment
+    }
+  }
+  ${PostFragmentFragmentDoc}
+`;
+export type DeleteOnePostMutationFn = ReactApollo.MutationFn<
+  DeleteOnePostMutation,
+  DeleteOnePostMutationVariables
+>;
+export type DeleteOnePostComponentProps = Omit<
+  ReactApollo.MutationProps<
+    DeleteOnePostMutation,
+    DeleteOnePostMutationVariables
+  >,
+  "mutation"
+>;
+
+export const DeleteOnePostComponent = (props: DeleteOnePostComponentProps) => (
+  <ReactApollo.Mutation<DeleteOnePostMutation, DeleteOnePostMutationVariables>
+    mutation={DeleteOnePostDocument}
     {...props}
   />
 );
@@ -268,8 +311,8 @@ export const SignupUserMutationComponent = (
 );
 
 export const FeedQueryDocument = gql`
-  query feedQuery {
-    feed {
+  query feedQuery($published: Boolean!) {
+    feed(published: $published) {
       ...PostFragment
     }
   }
@@ -278,7 +321,8 @@ export const FeedQueryDocument = gql`
 export type FeedQueryComponentProps = Omit<
   ReactApollo.QueryProps<FeedQueryQuery, FeedQueryQueryVariables>,
   "query"
->;
+> &
+  ({ variables: FeedQueryQueryVariables; skip?: false } | { skip: true });
 
 export const FeedQueryComponent = (props: FeedQueryComponentProps) => (
   <ReactApollo.Query<FeedQueryQuery, FeedQueryQueryVariables>

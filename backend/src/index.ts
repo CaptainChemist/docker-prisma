@@ -1,6 +1,6 @@
 import { nexusPrismaPlugin } from '@generated/nexus-prisma';
 import Photon from '@generated/photon';
-import { idArg, makeSchema, objectType, stringArg } from '@prisma/nexus';
+import { idArg, makeSchema, objectType, stringArg, booleanArg } from '@prisma/nexus';
 import { GraphQLServer } from 'graphql-yoga';
 import { join } from 'path';
 import { Context } from './types';
@@ -44,18 +44,12 @@ const Query = objectType({
 
     t.list.field('feed', {
       type: 'Post',
-      resolve: (parent, args, ctx) => {
+      args: {
+        published: booleanArg()
+      },
+      resolve: (parent, { published }, ctx) => {
         return ctx.photon.posts.findMany({
-          where: { published: true }
-        });
-      }
-    });
-
-    t.list.field('hiddenFeed', {
-      type: 'Post',
-      resolve: (parent, args, ctx) => {
-        return ctx.photon.posts.findMany({
-          where: { published: false }
+          where: { published }
         });
       }
     });
