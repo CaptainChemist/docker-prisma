@@ -8,8 +8,6 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 RUN npm install
-RUN prisma2 lift save -n migrate
-RUN prisma2 lift up 
 RUN prisma2 generate
 
 

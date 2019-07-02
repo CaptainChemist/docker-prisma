@@ -1,7 +1,7 @@
+
 datasource db {
-  provider = "sqlite"
-  url      = "file:dev.db"
-  default  = true
+  provider = "mysql"
+  url      = "mysql://root:prisma@mysql:3306/prisma"
 }
 
 generator photon {

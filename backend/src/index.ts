@@ -45,7 +45,7 @@ const Query = objectType({
     t.list.field('users', {
       type: 'User',
       resolve: (parent, args, ctx) => {
-        return ctx.photon.users.findMany();
+        return ctx.photon.users.findMany({});
       }
     });
 
