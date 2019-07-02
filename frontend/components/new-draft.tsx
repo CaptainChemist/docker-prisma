@@ -25,9 +25,15 @@ class NewDraft extends React.Component<Props> {
               });
             }}
           >
-            <input name="title" value={this.state.title} onChange={this.handleChange} type="text"></input>
-            <input name="content" value={this.state.content} onChange={this.handleChange} type="text"></input>
-            <input name="authorEmail" value={this.state.authorEmail} onChange={this.handleChange} type="text"></input>
+            <input placeholder="title" name="title" value={this.state.title} onChange={this.handleChange} type="text" />
+            <input placeholder="content" name="content" value={this.state.content} onChange={this.handleChange} type="text" />
+            <input
+              placeholder="authorEmail"
+              name="authorEmail"
+              value={this.state.authorEmail}
+              onChange={this.handleChange}
+              type="text"
+            />
 
             <button type="submit">Create Draft</button>
           </form>
