@@ -14,9 +14,11 @@ type Mutation {
 
 type Post {
   content: String
+  createdAt: DateTime!
   id: ID!
   published: Boolean!
   title: String!
+  updatedAt: DateTime!
 }
 
 input PostCreateManyWithoutPostsInput {

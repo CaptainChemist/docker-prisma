@@ -1,9 +1,9 @@
-import { nexusPrismaPlugin } from "@generated/nexus-prisma";
-import Photon from "@generated/photon";
-import { idArg, makeSchema, objectType, stringArg } from "@prisma/nexus";
-import { GraphQLServer } from "graphql-yoga";
-import { join } from "path";
-import { Context } from "./types";
+import { nexusPrismaPlugin } from '@generated/nexus-prisma';
+import Photon from '@generated/photon';
+import { idArg, makeSchema, objectType, stringArg } from '@prisma/nexus';
+import { GraphQLServer } from 'graphql-yoga';
+import { join } from 'path';
+import { Context } from './types';
 
 const photon = new Photon();
 
@@ -12,7 +12,7 @@ const nexusPrisma = nexusPrismaPlugin({
 });
 
 export const User = objectType({
-  name: "User",
+  name: 'User',
   definition(t) {
     t.model.id();
     t.model.name();
@@ -24,26 +24,26 @@ export const User = objectType({
 });
 
 export const Post = objectType({
-  name: "Post",
+  name: 'Post',
   definition(t) {
     t.model.id();
     t.model.title();
     t.model.content();
-    // t.model.createdAt()
-    // t.model.updatedAt()
+    t.model.createdAt();
+    t.model.updatedAt();
     t.model.published();
   }
 });
 
 const Query = objectType({
-  name: "Query",
+  name: 'Query',
   definition(t) {
     t.crud.findOnePost({
-      alias: "post"
+      alias: 'post'
     });
 
-    t.list.field("feed", {
-      type: "Post",
+    t.list.field('feed', {
+      type: 'Post',
       resolve: (parent, args, ctx) => {
         return ctx.photon.posts.findMany({
           where: { published: true }
@@ -51,8 +51,8 @@ const Query = objectType({
       }
     });
 
-    t.list.field("filterPosts", {
-      type: "Post",
+    t.list.field('filterPosts', {
+      type: 'Post',
       args: {
         searchString: stringArg({ nullable: true })
       },
@@ -79,13 +79,13 @@ const Query = objectType({
 });
 
 const Mutation = objectType({
-  name: "Mutation",
+  name: 'Mutation',
   definition(t) {
-    t.crud.createOneUser({ alias: "signupUser" });
+    t.crud.createOneUser({ alias: 'signupUser' });
     t.crud.deleteOnePost();
 
-    t.field("createDraft", {
-      type: "Post",
+    t.field('createDraft', {
+      type: 'Post',
       args: {
         title: stringArg(),
         content: stringArg({ nullable: true }),
@@ -105,8 +105,8 @@ const Mutation = objectType({
       }
     });
 
-    t.field("publish", {
-      type: "Post",
+    t.field('publish', {
+      type: 'Post',
       nullable: true,
       args: {
         id: idArg()
@@ -124,21 +124,21 @@ const Mutation = objectType({
 const schema = makeSchema({
   types: [Query, Mutation, Post, User, nexusPrisma],
   outputs: {
-    typegen: join(__dirname, "../generated/nexus-typegen.ts"),
-    schema: join(__dirname, "/schema.graphql")
+    typegen: join(__dirname, '../generated/nexus-typegen.ts'),
+    schema: join(__dirname, '/schema.graphql')
   },
   typegenAutoConfig: {
     sources: [
       {
-        source: "@generated/photon",
-        alias: "photon"
+        source: '@generated/photon',
+        alias: 'photon'
       },
       {
-        source: join(__dirname, "types.ts"),
-        alias: "ctx"
+        source: join(__dirname, 'types.ts'),
+        alias: 'ctx'
       }
     ],
-    contextType: "ctx.Context"
+    contextType: 'ctx.Context'
   }
 });
 

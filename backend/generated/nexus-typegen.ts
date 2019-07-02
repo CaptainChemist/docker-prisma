@@ -72,9 +72,11 @@ export interface NexusGenFieldTypes {
   }
   Post: { // field return type
     content: string | null; // String
+    createdAt: any; // DateTime!
     id: string; // ID!
     published: boolean; // Boolean!
     title: string; // String!
+    updatedAt: any; // DateTime!
   }
   Query: { // field return type
     feed: NexusGenRootTypes['Post'][]; // [Post!]!
