@@ -51,6 +51,15 @@ const Query = objectType({
       }
     });
 
+    t.list.field('hiddenFeed', {
+      type: 'Post',
+      resolve: (parent, args, ctx) => {
+        return ctx.photon.posts.findMany({
+          where: { published: false }
+        });
+      }
+    });
+
     t.list.field('filterPosts', {
       type: 'Post',
       args: {

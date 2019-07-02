@@ -40,6 +40,7 @@ input PostWhereUniqueInput {
 type Query {
   feed: [Post!]!
   filterPosts(searchString: String): [Post!]!
+  hiddenFeed: [Post!]!
   post(where: PostWhereUniqueInput!): Post
 }
 
