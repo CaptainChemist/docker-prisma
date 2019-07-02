@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import { DeleteOnePostComponent, FeedQueryDocument } from '../generated/apollo-components';
 
 type Props = {
@@ -11,20 +12,20 @@ class DeletePost extends React.Component<Props> {
     return (
       <DeleteOnePostComponent>
         {deleteOnePost => (
-          <form
-            onSubmit={e => {
-              e.preventDefault();
+          <Button
+            type="danger"
+            onClick={() =>
               deleteOnePost({
                 variables: { id },
                 refetchQueries: [
                   { query: FeedQueryDocument, variables: { published: true } },
                   { query: FeedQueryDocument, variables: { published: false } }
                 ]
-              });
-            }}
+              })
+            }
           >
-            <button type="submit">Delete</button>
-          </form>
+            Delete
+          </Button>
         )}
       </DeleteOnePostComponent>
     );

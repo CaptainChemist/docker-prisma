@@ -1,4 +1,5 @@
 import React from 'react';
+import { Row, Col, Button, Form, Input } from 'antd';
 import { SignupUserMutationComponent, UsersQueryDocument } from '../generated/apollo-components';
 
 type Props = {};
@@ -17,7 +18,7 @@ class SignupUser extends React.Component<Props> {
     return (
       <SignupUserMutationComponent>
         {createUser => (
-          <form
+          <Form
             onSubmit={e => {
               e.preventDefault();
               createUser({
@@ -28,11 +29,24 @@ class SignupUser extends React.Component<Props> {
               });
             }}
           >
-            <input placeholder="name" name="name" value={this.state.name} onChange={this.handleChange} type="text" />
-            <input placeholder="email" name="email" value={this.state.email} onChange={this.handleChange} type="text" />
-
-            <button type="submit">Signup User</button>
-          </form>
+            <Row>
+              <Col span={6}>
+                <Form.Item>
+                  <Input placeholder="name" name="name" value={this.state.name} onChange={this.handleChange} type="text" />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item>
+                  <Input placeholder="email" name="email" value={this.state.email} onChange={this.handleChange} type="text" />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item>
+                  <Button htmlType="submit">Signup User</Button>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
         )}
       </SignupUserMutationComponent>
     );

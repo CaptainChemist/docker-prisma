@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import { PublishMutationComponent, FeedQueryDocument } from '../generated/apollo-components';
 
 type Props = {
@@ -11,20 +12,19 @@ class PublishDraft extends React.Component<Props> {
     return (
       <PublishMutationComponent>
         {publishDraft => (
-          <form
-            onSubmit={e => {
-              e.preventDefault();
+          <Button
+            onClick={() =>
               publishDraft({
                 variables: { id },
                 refetchQueries: [
                   { query: FeedQueryDocument, variables: { published: true } },
                   { query: FeedQueryDocument, variables: { published: false } }
                 ]
-              });
-            }}
+              })
+            }
           >
-            <button type="submit">Publish</button>
-          </form>
+            Publish
+          </Button>
         )}
       </PublishMutationComponent>
     );

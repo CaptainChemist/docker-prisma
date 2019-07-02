@@ -1,4 +1,5 @@
 import React from 'react';
+import { Row, Col, Button, Form, Input } from 'antd';
 import { CreateDraftMutationComponent, FeedQueryDocument } from '../generated/apollo-components';
 
 type Props = {};
@@ -17,7 +18,7 @@ class NewDraft extends React.Component<Props> {
     return (
       <CreateDraftMutationComponent>
         {createDraft => (
-          <form
+          <Form
             onSubmit={e => {
               e.preventDefault();
               createDraft({
@@ -26,23 +27,41 @@ class NewDraft extends React.Component<Props> {
                   { query: FeedQueryDocument, variables: { published: true } },
                   { query: FeedQueryDocument, variables: { published: false } }
                 ]
-              }).then(() => {
+              }).then(res => {
+                console.log(res);
                 this.setState({ title: '', content: '', authorEmail: '' });
               });
             }}
           >
-            <input placeholder="title" name="title" value={this.state.title} onChange={this.handleChange} type="text" />
-            <input placeholder="content" name="content" value={this.state.content} onChange={this.handleChange} type="text" />
-            <input
-              placeholder="authorEmail"
-              name="authorEmail"
-              value={this.state.authorEmail}
-              onChange={this.handleChange}
-              type="text"
-            />
-
-            <button type="submit">Create Draft</button>
-          </form>
+            <Row>
+              <Col span={6}>
+                <Form.Item>
+                  <Input placeholder="title" name="title" value={this.state.title} onChange={this.handleChange} type="text" />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item>
+                  <Input placeholder="content" name="content" value={this.state.content} onChange={this.handleChange} type="text" />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item>
+                  <Input
+                    placeholder="authorEmail"
+                    name="authorEmail"
+                    value={this.state.authorEmail}
+                    onChange={this.handleChange}
+                    type="text"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item>
+                  <Button htmlType="submit">Create Draft</Button>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
         )}
       </CreateDraftMutationComponent>
     );

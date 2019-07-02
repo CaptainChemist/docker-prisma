@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table, Button } from 'antd';
 import { FeedQueryComponent } from '../generated/apollo-components';
 import PublishDraft from './publish-draft';
 import DeletePost from './delete-post';
@@ -17,19 +18,37 @@ class FeedList extends React.PureComponent<Props> {
           if (error) return <p>Error</p>;
 
           if (data && 'feed' in data && data.feed.length > 0) {
-            return (
-              <ul>
-                {data.feed.map(({ id, title, content, published }, i) => (
-                  <li key={i}>
-                    <p>
-                      title: {title} content: {content}
-                    </p>
-                    {published ? null : <PublishDraft id={id} />}
-                    <DeletePost id={id} />
-                  </li>
-                ))}
-              </ul>
-            );
+            const feedData = data.feed.map(({ id, title, content }, i) => ({
+              key: i,
+              title,
+              content,
+              id
+            }));
+            const columns = [
+              {
+                title: 'Title',
+                dataIndex: 'title',
+                key: 'title'
+              },
+              {
+                title: 'Content',
+                dataIndex: 'content',
+                key: 'content'
+              },
+              {
+                title: 'Action',
+                key: 'action',
+                render: ({ id }: { id: string }) => {
+                  return (
+                    <Button.Group>
+                      {published ? null : <PublishDraft id={id} />}
+                      <DeletePost id={id} />
+                    </Button.Group>
+                  );
+                }
+              }
+            ];
+            return <Table columns={columns} dataSource={feedData} />;
           }
 
           return <p>No results yet.</p>;
